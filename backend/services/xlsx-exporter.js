@@ -1,4 +1,4 @@
-const ExcelJS = require('exceljs');
+import ExcelJS from 'exceljs';
 
 const RATES = {
   cluster: 1274.90,
@@ -326,6 +326,6 @@ function generateXlsx(bid, callback) {
   }
 }
 
-module.exports = {
+export default {
   generateXlsx
 };

@@ -75,7 +75,7 @@ export default function SignIn({ onSignIn }) {
 
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           <div>
-            <label style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#1A1A2E', marginBottom: '8px' }}>
+            <label htmlFor="email" style={{ display: 'block', fontSize: '13px', fontWeight: '600', color: '#1A1A2E', marginBottom: '8px' }}>
               Corporate Email Address
             </label>
             <div style={{ position: 'relative' }}>
@@ -87,6 +87,7 @@ export default function SignIn({ onSignIn }) {
                 color: '#7F8C8D'
               }} />
               <input
+                id="email"
                 type="email"
                 required
                 className="input-field"
@@ -100,7 +101,7 @@ export default function SignIn({ onSignIn }) {
 
           <div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
-              <label style={{ fontSize: '13px', fontWeight: '600', color: '#1A1A2E' }}>
+              <label htmlFor="password" style={{ fontSize: '13px', fontWeight: '600', color: '#1A1A2E' }}>
                 Secure Password
               </label>
             </div>
@@ -113,6 +114,7 @@ export default function SignIn({ onSignIn }) {
                 color: '#7F8C8D'
               }} />
               <input
+                id="password"
                 type="password"
                 required
                 className="input-field"

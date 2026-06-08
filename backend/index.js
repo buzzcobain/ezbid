@@ -1,7 +1,13 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const fs = require('fs');
+import express from 'express';
+import cors from 'cors';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import docxExporter from './services/docx-exporter.js';
+import xlsxExporter from './services/xlsx-exporter.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 10000;
@@ -260,8 +266,21 @@ app.post('/api/search', (req, res) => {
       }
     ];
 
+    const getRegionForOppy = (o) => {
+      const addr = o.address.toLowerCase();
+      const lpa = o.lpa.toLowerCase();
+      if (addr.includes('exeter') || lpa.includes('exeter') || addr.includes('bristol') || lpa.includes('bristol')) return 'south west';
+      if (addr.includes('manchester') || lpa.includes('manchester')) return 'north west';
+      if (addr.includes('newport') || lpa.includes('newport') || addr.includes('cardiff') || lpa.includes('cardiff')) return 'wales';
+      return '';
+    };
+
     const filtered = region && region !== 'Nationwide' 
-      ? mockOpportunities.filter(o => o.address.toLowerCase().includes(region.toLowerCase()) || o.lpa.toLowerCase().includes(region.toLowerCase()))
+      ? mockOpportunities.filter(o => 
+          o.address.toLowerCase().includes(region.toLowerCase()) || 
+          o.lpa.toLowerCase().includes(region.toLowerCase()) ||
+          getRegionForOppy(o) === region.toLowerCase()
+        )
       : mockOpportunities;
 
     res.json({ opportunities: filtered });
@@ -270,7 +289,6 @@ app.post('/api/search', (req, res) => {
 
 // 7. Export files endpoints placeholder (we will fill code inside services/exporter)
 app.get('/api/bids/:id/export/docx', (req, res) => {
-  const docxExporter = require('./services/docx-exporter');
   const bids = readBids();
   const bid = bids.find(b => b.id.toLowerCase() === req.params.id.toLowerCase());
   
@@ -290,7 +308,6 @@ app.get('/api/bids/:id/export/docx', (req, res) => {
 });
 
 app.get('/api/bids/:id/export/xlsx', (req, res) => {
-  const xlsxExporter = require('./services/xlsx-exporter');
   const bids = readBids();
   const bid = bids.find(b => b.id.toLowerCase() === req.params.id.toLowerCase());
   
@@ -319,3 +336,6 @@ if (fs.existsSync(publicPath)) {
 app.listen(PORT, () => {
   console.log(`EzBid backend listening on port ${PORT}`);
 });
+
+export default app;
+

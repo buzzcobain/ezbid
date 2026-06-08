@@ -1,6 +1,10 @@
-const { Anthropic } = require('@anthropic-ai/sdk');
-const fs = require('fs');
-const path = require('path');
+import { Anthropic } from '@anthropic-ai/sdk';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Initialize Anthropic client if key is available
 const apiKey = process.env.ANTHROPIC_API_KEY;
@@ -95,7 +99,7 @@ async function draftBidDocument(projectDetails) {
   }
 }
 
-module.exports = {
+export default {
   classifyApplication,
   draftBidDocument,
   isDemoMode: !anthropic

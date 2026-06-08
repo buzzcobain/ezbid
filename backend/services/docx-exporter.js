@@ -1,4 +1,4 @@
-const { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, AlignmentType, BorderStyle, WidthType, PageBreak } = require('docx');
+import { Document, Packer, Paragraph, TextRun, HeadingLevel, Table, TableRow, TableCell, AlignmentType, BorderStyle, WidthType, PageBreak } from 'docx';
 
 // Rates database to compute totals
 const RATES = {
@@ -410,6 +410,6 @@ function parseInlineFormatting(text) {
   return runs;
 }
 
-module.exports = {
+export default {
   generateDocx
 };
