@@ -146,5 +146,12 @@ nosetests.xml
 coverage.xml
 *.cover
 *.py,cover
-.hypothesis/
 .pytest_cache/
+
+# Office temporary files
+~$*
+
+# Compiled production assets
+backend/public/
+
+
