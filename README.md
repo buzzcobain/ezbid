@@ -51,3 +51,20 @@ graph TD
 3.  **Drafting**: The bid writer combines the planning details with the firm profile to draft the cover letter, services, and past projects.
 4.  **Refinement**: The user adjusts bedroom and kitchen counts in the UI to fit the project's exact drawings, instantly recalculating the bill of quantities (BOQ).
 5.  **Export**: The backend generates final `.docx` and `.xlsx` files ready for client submission.
+
+---
+
+## Developer Guidelines & Code Quality Standards
+
+To maintain the production-grade integrity of the EzBid platform, any developer or agent contributing to this project must adhere to the following standards:
+
+1. **Senior Engineering Mindset**: Focus on writing clean, modular, self-documenting code with clear separation of concerns. Avoid monolithic functions, hardcoded hacks, and copy-pasted blocks.
+2. **Strict Test Coverage (>=90%)**:
+   - Every backend API route, database handler, export service, and React page component must be covered by unit/integration tests.
+   - Run the unified coverage suite from the root using: `npm run test:coverage`.
+   - Keep coverage thresholds strictly above **90%** for statements, branches, functions, and lines.
+3. **Older Node Compatibility (v16)**:
+   - Ensure the root [`polyfill.js`](file:///c:/Users/netbu/OneDrive/Desktop/Projects/ezbid/polyfill.js) is preloaded when running Vitest or other ESM scripts under older Node environments to ensure `crypto.getRandomValues` resolves correctly.
+4. **Mocking Boundaries**:
+   - Never hit live external services (like the Anthropic API) or perform destructive file writes on the main `bids.json` data store inside tests. Always isolate integrations using Vitest spies (`vi.mock` / `vi.fn`).
+
